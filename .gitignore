@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+venv/
+env/
+# VSCode
+.vscode/
+
+*.pdf
+dados.xlsx
+
+# Arquivos temporários e de saída
+Instruções/
+temp_paginas/
+*.log
+
+# Arquivos do sistema
+Thumbs.db
+.DS_Store
+
+# Arquivos de
