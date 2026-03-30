@@ -19,16 +19,16 @@ def create_overlay(nome, matricula, funcao, setor, admissao):
     
     # Define a folha para Paisagem (Deitada)
     can = canvas.Canvas(packet, pagesize=landscape(A4)) 
-    can.setFont("Helvetica-Bold", 12)
+    can.setFont("Helvetica-Bold", 10)
     can.setFillColor("black") 
     
-    can.drawString(550, 475, f"{nome}")          
-    can.drawString(550, 433, f"{matricula}")     
-    can.drawString(550, 390, f"{funcao}")       
-    can.drawString(550, 352, f"{setor}")         
+    can.drawString(535, 475, f"{nome}")          
+    can.drawString(535, 433, f"{matricula}")     
+    can.drawString(535, 390, f"{funcao}")       
+    can.drawString(535, 352, f"{setor}")         
     
     data_admissao = str(admissao) if pd.notna(admissao) else "N/A"
-    can.drawString(550, 310, f"{data_admissao}") 
+    can.drawString(535, 310, f"{data_admissao}") 
         
     can.save()
     packet.seek(0)
