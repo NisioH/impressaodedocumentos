@@ -11,9 +11,10 @@ env/
 
 *.pdf
 *.xlsx
+*.png
 
 # Arquivos temporários e de saída
-Instruções/
+
 temp_paginas/
 *.log
 
