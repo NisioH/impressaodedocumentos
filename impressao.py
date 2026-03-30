@@ -5,7 +5,7 @@ from PyPDF2 import PdfReader, PdfWriter
 import time  
 
 printer_name = win32print.GetDefaultPrinter()
-folder_path = r"C:\Users\fazin\OneDrive\Documents\CertificadoBrigada"
+folder_path = r"C:\Users\fazin\OneDrive\Documents\Nisio\ImpressaoDocumentos\Fichas_Preenchidas"
 
 
 temp_folder = os.path.join(folder_path, "temp_paginas")

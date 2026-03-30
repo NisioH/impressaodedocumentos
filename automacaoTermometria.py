@@ -8,16 +8,16 @@ pyautogui.FAILSAFE = False
 
 time.sleep(2)
 # Abrir programa AirMaster Posição do mouse: Point(x=347, y=746)
-pyautogui.click(305, 744) 
+pyautogui.click(697, 1052) 
 
 time.sleep(60)
 
 
-pyautogui.click(10, 14)
+pyautogui.click(17, 17)
 print("Clicou no menu iniciar")
 
 time.sleep(1)
-pyautogui.click(46, 44)
+pyautogui.click(45, 40)
 time.sleep(1)
 
 pyautogui.write(str('admin'), interval=0.1)
@@ -25,13 +25,13 @@ time.sleep(1)
 pyautogui.press('tab')
 pyautogui.write(str('senha'), interval=0.1)
 time.sleep(1)
-pyautogui.click(699, 436)
+pyautogui.click(961, 590)
 time.sleep(3)
 
 # Comerçar a tirar o relatório da Termometria
-pyautogui.click(508, 11)
+pyautogui.click(500, 13)
 time.sleep(1)
-pyautogui.click(38, 63)
+pyautogui.click(41, 65)
 time.sleep(1)
 
 
@@ -61,49 +61,49 @@ pyautogui.press('tab')  # ou outro comando para ir ao próximo campo
 pyautogui.write(data_final, interval=0.1)
 
 # Atualizar 
-pyautogui.click(519, 174)
+pyautogui.click(798, 331)
 time.sleep(1)
 
 #Selecionar todas as unidades
-pyautogui.click(247, 354)
+pyautogui.click(524, 510)
 time.sleep(1)
 
 #Selecionar todas datas
-pyautogui.click(551, 356)
+pyautogui.click(827, 510)
 time.sleep(1)
 
 #Selecionar todas as horas
-pyautogui.click(853, 353)
+pyautogui.click(1130, 510)
 time.sleep(1)
 
 #Clicar em PDF para gerar relatório
-pyautogui.click(364, 87)
+pyautogui.click(664, 239)
 time.sleep(50)
 
 # Selecionar Área de trabalho
-pyautogui.click(388, 257)
-time.sleep(1)
+pyautogui.click(653, 405)
+time.sleep(2)
 
 # Selecionar pasta Termometria
-pyautogui.doubleClick(671, 329)
-time.sleep(1)
+""" pyautogui.doubleClick(645, 345)
+time.sleep(1) """
 
 # Salvar
-pyautogui.click(979, 519)
+pyautogui.click(1264, 669)
 time.sleep(5)
 
 pyautogui.press('enter')
 time.sleep(1)
 
 #Fechar a janela
-pyautogui.click(1132, 26)
+pyautogui.click(1409, 185)
 time.sleep(1)
 
-pyautogui.click(109, 11)
+pyautogui.click(115, 16)
 time.sleep(1)
 
-pyautogui.click(287, 73)
+""" pyautogui.click(287, 73)
 time.sleep(1)
 
-pyautogui.click(568, 485)
+pyautogui.click(568, 485) """
    

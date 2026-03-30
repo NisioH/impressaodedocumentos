@@ -10,7 +10,7 @@ env/
 .vscode/
 
 *.pdf
-dados.xlsx
+*.xlsx
 
 # Arquivos temporários e de saída
 Instruções/
