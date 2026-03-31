@@ -6,6 +6,18 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4, landscape 
 from reportlab.lib.colors import black
 import os
+import sys
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+if sys.platform.startswith('win'):
+    CAMINHO_POPPLER = os.path.join(BASE_DIR, 'poppler-windows', 'Library', 'bin')
+    FONTE_CAMINHO = os.path.join(BASE_DIR, 'arialbd.ttf') 
+else:
+    # No seu Fedora:
+    CAMINHO_POPPLER = None 
+    FONTE_CAMINHO = "/usr/share/fonts/liberation-sans/LiberationSans-Bold.ttf"
+
 
 df_nomes = pd.read_excel("DadosFichaEPI.xlsx", sheet_name="Nomes")
 df_epis = pd.read_excel("DadosFichaEPI.xlsx", sheet_name="EPI")
@@ -85,4 +97,4 @@ for index, row in df_nomes.iterrows():
     with open(output_filename, "wb") as output_file:
         output_pdf.write(output_file)
 
-print(f"\nConcluído! Abra a pasta '{output_dir}' e veja se o texto apareceu.")
+print(f"\nConcluído! Salvo na pasta '{output_dir}'.")
