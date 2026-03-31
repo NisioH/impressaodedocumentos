@@ -7,14 +7,16 @@ from reportlab.lib.pagesizes import A4, landscape
 from reportlab.lib.colors import black
 import os
 
-df = pd.read_excel("DadosFichaEPI.xlsx")
+df_nomes = pd.read_excel("DadosFichaEPI.xlsx", sheet_name="Nomes")
+df_epis = pd.read_excel("DadosFichaEPI.xlsx", sheet_name="EPI")
+
 pdf_template = "Ficha de EPI - Modelo.pdf"
 output_dir = "Fichas_Preenchidas"
 
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
-def create_overlay(nome, matricula, funcao, setor, admissao):
+def create_overlay(nome, matricula, funcao, setor, admissao, lista_epis):
     packet = io.BytesIO()
     
     # Define a folha para Paisagem (Deitada)
@@ -29,12 +31,28 @@ def create_overlay(nome, matricula, funcao, setor, admissao):
     
     data_admissao = str(admissao) if pd.notna(admissao) else "N/A"
     can.drawString(535, 310, f"{data_admissao}") 
+
+    y_linha_epi = 220
+    espaco_entre_linhas = 26
+
+    for index, epi in lista_epis.iterrows():
+        descricao_text = str(epi['Descrição']) if pd.notna(epi['Descrição']) else ""
+        ca_texto = int(epi['CA']) if pd.notna(epi['CA']) else ""
+
+        if descricao_text == "" and ca_texto == "":
+            continue
+        
+        can.drawString(168, y_linha_epi, f"{descricao_text}")
+        can.drawString(465, y_linha_epi, f"{ca_texto}")
+
+        y_linha_epi -= espaco_entre_linhas
+    
         
     can.save()
     packet.seek(0)
     return packet
 
-for index, row in df.iterrows():
+for index, row in df_nomes.iterrows():
     nome = row['Nome']
     matricula = row['Matrícula']
     funcao = row['Função']
@@ -47,7 +65,7 @@ for index, row in df.iterrows():
     
     print(f"Gerando ficha para: {nome}...")
     
-    overlay_pdf_stream = create_overlay(nome, matricula, funcao, setor, data_admissao_formatada)
+    overlay_pdf_stream = create_overlay(nome, matricula, funcao, setor, data_admissao_formatada, df_epis)
     
     template_pdf = PdfReader(open(pdf_template, "rb"))
     overlay_pdf = PdfReader(overlay_pdf_stream)
