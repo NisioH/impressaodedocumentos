@@ -12,7 +12,7 @@ env/
 *.pdf
 *.xlsx
 *.png
-
+.idea/
 # Arquivos temporários e de saída
 
 temp_paginas/
