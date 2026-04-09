@@ -12,15 +12,18 @@ def main(page: ft.Page):
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.theme_mode = ft.ThemeMode.LIGHT  # ou DARK, como preferir
 
+    # --- Configurações de Impressão ---
+    EXTENSOES_PERMITIDAS = {".pdf", ".jpg", ".jpeg", ".png", ".txt", ".odt", ".docx"}
+
     # --- Funções de Notificação Visual ---
     def mostrar_erro(mensagem):
-        snack = ft.SnackBar(ft.Text(mensagem), bgcolor=ft.colors.ERROR)
+        snack = ft.SnackBar(ft.Text(mensagem, color=ft.colors.WHITE), bgcolor=ft.colors.ERROR)
         page.overlay.append(snack)
         snack.open = True
         page.update()
 
     def mostrar_sucesso(mensagem):
-        snack = ft.SnackBar(ft.Text(mensagem), bgcolor=ft.colors.GREEN_700)
+        snack = ft.SnackBar(ft.Text(mensagem, color=ft.colors.WHITE), bgcolor=ft.colors.GREEN_700)
         page.overlay.append(snack)
         snack.open = True
         page.update()
@@ -32,6 +35,7 @@ def main(page: ft.Page):
             # Envia o arquivo para o CUPS (impressora padrão do Linux)
             subprocess.run(['lpr', caminho_arquivo], check=True)
             mostrar_sucesso(f"Enviado para impressão:\n{os.path.basename(caminho_arquivo)}")
+            return True
 
         except subprocess.CalledProcessError as e:
             mostrar_erro(f"Falha ao imprimir {os.path.basename(caminho_arquivo)}.")
@@ -39,30 +43,39 @@ def main(page: ft.Page):
             mostrar_erro("Comando 'lpr' não encontrado. Verifique se o CUPS está instalado.")
         except Exception as e:
             mostrar_erro(f"Erro inesperado: {str(e)}")
+        return False
 
     def imprimir_pasta(caminho_pasta):
         if not os.path.isdir(caminho_pasta):
             mostrar_erro("Pasta inválida.")
             return
 
-        arquivos = os.listdir(caminho_pasta)
+        # Listagem ordenada alfabeticamente
+        arquivos = sorted(os.listdir(caminho_pasta))
         arquivos_impressos = 0
 
         for arquivo in arquivos:
             caminho_arquivo = os.path.join(caminho_pasta, arquivo)
-            if os.path.isfile(caminho_arquivo):
-                imprimir_arquivo(caminho_arquivo)
-                arquivos_impressos += 1
+            extensao = os.path.splitext(arquivo)[1].lower()
+
+            if os.path.isfile(caminho_arquivo) and extensao in EXTENSOES_PERMITIDAS:
+                if imprimir_arquivo(caminho_arquivo):
+                    arquivos_impressos += 1
 
         if arquivos_impressos > 0:
             mostrar_sucesso(f"{arquivos_impressos} arquivo(s) enviados para a fila!")
         else:
-            mostrar_erro("Nenhum arquivo encontrado na pasta.")
+            mostrar_erro("Nenhum arquivo válido (PDF, Imagem, TXT) encontrado na pasta.")
 
     # --- Tratamento das Janelas de Seleção ---
     def ao_escolher_arquivo(e: ft.FilePickerResultEvent):
         if e.files and len(e.files) > 0:
-            imprimir_arquivo(e.files[0].path)
+            arquivo = e.files[0]
+            extensao = os.path.splitext(arquivo.name)[1].lower()
+            if extensao in EXTENSOES_PERMITIDAS:
+                imprimir_arquivo(arquivo.path)
+            else:
+                mostrar_erro(f"Extensão {extensao} não suportada.")
 
     def ao_escolher_pasta(e: ft.FilePickerResultEvent):
         if e.path:
