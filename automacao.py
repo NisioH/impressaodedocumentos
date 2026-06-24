@@ -62,7 +62,7 @@ for index, row in df_automacao.iterrows():
         time.sleep(1)
 
         pyautogui.click(357, 572)
-        pyautogui.write(str(row['Fornecedor']), interval=0.1)
+        pyautogui.write(str(row['Fornece10/01/202dor']), interval=0.1)
         time.sleep(1)
         pyautogui.press('tab')
 
@@ -72,7 +72,7 @@ for index, row in df_automacao.iterrows():
 
         pyautogui.click(353, 693)
         time.sleep(1)
-    
+
         pyautogui.click(1229, 167)
         time.sleep(3)
 
